@@ -24,6 +24,7 @@ RUN flirt -version
 ## environment
 
 ## install afni
+RUN apt-get install -y software-properties-common
 RUN add-apt-repository universe
 RUN apt-get update
 RUN apt-get install -y tcsh xfonts-base python-qt4       \
