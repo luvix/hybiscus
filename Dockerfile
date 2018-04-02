@@ -5,6 +5,10 @@ LABEL maintainer="Leesuk \"Theodore\" Kim, Researcher in SungKyunKwan Univ.<lees
 ## volume
 VOLUME [ "/hybiscus" ]
 
+## preparation to install fsl
+RUN apt-get update; apt-get -y dist-upgrade
+RUN apt-get install python
+
 ## install fsl
 COPY fslinstaller.py .
 RUN python /fslinstaller.py 
