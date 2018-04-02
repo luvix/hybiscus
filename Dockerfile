@@ -8,7 +8,7 @@ VOLUME [ "/hybiscus" ]
 ## preparation to install fsl
 
 ## install fsl
-RUN apt-get update \ && apt-get install -y fsl-5.0-core
+RUN apt-get update && apt-get install -y fsl-5.0-core
 
 ### Configure environment 
 ENV FSLDIR=/usr/lib/fsl/5.0 
