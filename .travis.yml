@@ -6,4 +6,4 @@ services:
 
 before_install:
   - docker build -t thdrl/hybiscus .
-  - docker run -d hybiscus
+  - docker run -d thdrl/hybiscus
