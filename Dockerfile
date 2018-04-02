@@ -1,4 +1,4 @@
-FROM ubuntu:xenial
+FROM python:2-slim
 
 LABEL maintainer="Leesuk \"Theodore\" Kim, Researcher in SungKyunKwan Univ.<leesuk.kim.skku@gmail.com>"
 
