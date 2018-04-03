@@ -35,27 +35,30 @@ RUN echo 'setenv R_LIBS $HOME/R' >> /etc/csh.cshrc
 RUN mkdir $HOME/R
 RUN curl -O https://afni.nimh.nih.gov/pub/dist/src/scripts_src/@add_rcran_ubuntu.tcsh
 RUN tcsh -c "tcsh @add_rcran_ubuntu.tcsh"
-RUN tcsh -c "rPkgsInstall -pkgs ALL"
+RUN tcsh -c "tcsh rPkgsInstall -pkgs ALL"
 
 ### Make AFNI/SUMA profiles
 RUN cp $HOME/abin/AFNI.afnirc $HOME/.afnirc 
-RUN tcsh -c "suma -update_env"
+RUN tcsh -c "tcsh suma -update_env"
 ### Prepare for Bootcamp
 RUN curl -O https://afni.nimh.nih.gov/pub/dist/edu/data/CD.tgz
 RUN tar xvzf CD.tgz && cd CD
-RUN tcsh -c "s2.cp.files . ~ && cd .."
+RUN tcsh -c "tcsh s2.cp.files . ~ && cd .."
 
 ### Evaluate setup/system (important!)
-RUN tcsh -c "afni_system_check.py -check_all > ~/out.afni_system_check.txt"
+RUN tcsh -c "tcsh afni_system_check.py -check_all > ~/out.afni_system_check.txt"
 
 ### Niceify terminal (optional, but goood)
 RUN echo 'set filec' >> /etc/csh.cshrc
 RUN echo 'set autolist' >> /etc/csh.cshrc
 RUN echo 'set nobeep'   >> /etc/csh.cshrc
+RUN echo 'set filec' >> ~/.bashrc
+RUN echo 'set autolist' >> ~/.bashrc
+RUN echo 'set nobeep'   >> ~/.bashrc
 
 RUN echo 'alias ls ls --color=auto' >> /etc/csh.cshrc
 RUN echo 'alias ll ls --color -l'   >> /etc/csh.cshrc
 RUN echo 'alias ls="ls --color"'    >> ~/.bashrc
 RUN echo 'alias ll="ls --color -l"' >> ~/.bashrc
 
-RUN tcsh -c "echo afni -ver"
+RUN tcsh -c "tcsh echo afni -ver"
