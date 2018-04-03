@@ -19,7 +19,7 @@ RUN apt-get install -y gnome-terminal nautilus      \
                         gnome-icon-theme-symbolic
 
 ### Make “tcsh” default shell (optional/recommended)
-RUN chsh -s /usr/bin/tcsh && tcsh
+RUN chsh -s /usr/bin/tcsh
 
 ### Install AFNI binaries
 RUN cd
@@ -28,6 +28,9 @@ RUN tcsh @update.afni.binaries -package linux_ubuntu_16_64  -do_extras
 
 ### Install R
 RUN tcsh -c "setenv R_LIBS $HOME/R"
+RUN tail ~/.tcshrc
+RUN echo rcsh -c "source ~/.tcshrc"
+RUN tail ~/.tcshrc
 RUN tcsh -c "mkdir $R_LIBS"
 RUN tcsh -c "echo 'setenv R_LIBS ~/R' >> ~/.cshrc"
 RUN curl -O https://afni.nimh.nih.gov/pub/dist/src/scripts_src/@add_rcran_ubuntu.tcsh
