@@ -27,10 +27,11 @@ RUN curl -O https://afni.nimh.nih.gov/pub/dist/bin/linux_ubuntu_16_64/@update.af
 RUN tcsh @update.afni.binaries -package linux_ubuntu_16_64  -do_extras
 
 ### Install R
-RUN tcsh -c "setenv R_LIBS $HOME/R"
+RUN export R_LIBS=$HOME/R
 RUN echo 'export R_LIBS=$HOME/R' >> .bashrc
+RUN tcsh -c "setenv R_LIBS $HOME/R"
 RUN echo 'setenv R_LIBS $HOME/R' >> /etc/csh.cshrc  
-RUN tcsh -c "mkdir $R_LIBS" 
+RUN mkdir $R_LIBS
 RUN curl -O https://afni.nimh.nih.gov/pub/dist/src/scripts_src/@add_rcran_ubuntu.tcsh
 RUN tcsh -c "tcsh @add_rcran_ubuntu.tcsh"
 RUN tcsh -c "rPkgsInstall -pkgs ALL"
