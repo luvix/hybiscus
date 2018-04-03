@@ -19,7 +19,7 @@ RUN apt-get install -y gnome-terminal nautilus      \
                         gnome-icon-theme-symbolic
 
 ### Make “tcsh” default shell (optional/recommended)
-RUN chsh -s /usr/bin/tcsh && tcsh ./setup.csh ** tcsh
+RUN chsh -s /usr/bin/tcsh && tcsh
 
 ### Install AFNI binaries
 RUN cd
