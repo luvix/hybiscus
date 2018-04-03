@@ -28,9 +28,9 @@ RUN tcsh @update.afni.binaries -package linux_ubuntu_16_64  -do_extras
 
 ### Install R
 RUN tcsh -c "setenv R_LIBS $HOME/R"
-RUN tcsh -c "tail ~/.tcshrc"
+RUN tcsh -c "tail ~/.cshrc"
 RUN echo rcsh -c "source ~/.tcshrc"
-RUN tcsh -c "tail ~/.tcshrc"
+RUN tcsh -c "tail ~/.cshrc"
 RUN tcsh -c "mkdir $R_LIBS"
 RUN tcsh -c "echo 'setenv R_LIBS ~/R' >> ~/.cshrc"
 RUN curl -O https://afni.nimh.nih.gov/pub/dist/src/scripts_src/@add_rcran_ubuntu.tcsh
