@@ -7,6 +7,7 @@ VOLUME [ "/hybiscus" ]
 
 ## Install AFNI and dependency packages
 ### Install prerequisite packages
+RUN apt-get update; apt-get -y upgrade
 RUN apt-get install -y software-properties-common
 RUN add-apt-repository universe
 RUN apt-get update
