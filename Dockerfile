@@ -22,11 +22,12 @@ RUN apt-get install -y gnome-terminal nautilus      \
 RUN chsh -s /usr/bin/tcsh
 
 ### Install AFNI binaries
-RUN cd; curl -O https://afni.nimh.nih.gov/pub/dist/bin/linux_ubuntu_16_64/@update.afni.binaries
+RUN cd
+RUN curl -O https://afni.nimh.nih.gov/pub/dist/bin/linux_ubuntu_16_64/@update.afni.binaries
 RUN tcsh @update.afni.binaries -package linux_ubuntu_16_64  -do_extras
 
 #### Question: Is it necessery?
-RUN source ~/.bashrc
+# RUN source ~/.bashrc
 
 ### Install R
 RUN setenv R_LIBS $HOME/R
