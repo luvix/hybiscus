@@ -29,6 +29,7 @@ RUN tcsh @update.afni.binaries -package linux_ubuntu_16_64  -do_extras
 ### Install R
 RUN export R_LIBS=$HOME/R
 RUN echo 'export R_LIBS=$HOME/R' >> .bashrc
+RUN echo $R_LIBS
 RUN tcsh -c "setenv R_LIBS $HOME/R"
 RUN echo 'setenv R_LIBS $HOME/R' >> /etc/csh.cshrc  
 RUN mkdir $R_LIBS
