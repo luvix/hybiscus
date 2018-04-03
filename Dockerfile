@@ -18,8 +18,8 @@ RUN apt-get install -y tcsh xfonts-base python-qt4 gsl-bin netpbm gnome-tweak-to
 RUN chsh -s /usr/bin/tcsh
 
 ### Install R
-RUN find / -name 'cshrc' > find_cshrc
 RUN tcsh -c "printenv"
-RUN tcsh -c "tail find_cshrc"
 RUN tcsh -c "setenv R_LIBS $HOME/R"
-
+RUN echo 'setenv R_LIBS $HOME/R' >> /etc/csh.cshrc"
+RUN tcsh -c "printenv"
+RUN tcsh -c "mkdir $R_LIBS" 
