@@ -27,13 +27,11 @@ RUN curl -O https://afni.nimh.nih.gov/pub/dist/bin/linux_ubuntu_16_64/@update.af
 RUN tcsh @update.afni.binaries -package linux_ubuntu_16_64  -do_extras
 
 ### Install R
-RUN find / -name '.cshrc'
 RUN tcsh -c "setenv R_LIBS $HOME/R"
-# RUN tcsh -c "mkdir $R_LIBS" 
-RUN tcsh -c "mkdir $HOME/R"
-RUN tcsh -c "echo 'setenv R_LIBS ~/R' >> ~/.cshrc"
+RUN echo 'setenv R_LIBS $HOME/R' >> /etc/csh.cshrc
+RUN tcsh -c "mkdir $R_LIBS" 
 RUN curl -O https://afni.nimh.nih.gov/pub/dist/src/scripts_src/@add_rcran_ubuntu.tcsh
-RUN tcsh -c "@add_rcran_ubuntu.tcsh"
+RUN tcsh -c "tcsh @add_rcran_ubuntu.tcsh"
 RUN tcsh -c "rPkgsInstall -pkgs ALL"
 
 ### Make AFNI/SUMA profiles
@@ -48,13 +46,13 @@ RUN tcsh -c "s2.cp.files . ~ && cd .."
 RUN tcsh -c "afni_system_check.py -check_all > ~/out.afni_system_check.txt"
 
 ### Niceify terminal (optional, but goood)
-RUN tcsh -c "echo 'set filec' >> ~/.cshrc"
-RUN tcsh -c "echo 'set autolist' >> ~/.cshrc"
-RUN tcsh -c "echo 'set nobeep'   >> ~/.cshrc"
+RUN echo 'set filec' >> /etc/csh.cshrc
+RUN echo 'set autolist' >> /etc/csh.cshrc
+RUN echo 'set nobeep'   >> /etc/csh.cshrc
 
-RUN tcsh -c "echo 'alias ls ls --color=auto' >> ~/.cshrc"
-RUN tcsh -c "echo 'alias ll ls --color -l'   >> ~/.cshrc"
-RUN tcsh -c "echo 'alias ls="ls --color"'    >> ~/.bashrc"
-RUN tcsh -c "echo 'alias ll="ls --color -l"' >> ~/.bashrc"
+RUN echo 'alias ls ls --color=auto' >> /etc/csh.cshrc
+RUN echo 'alias ll ls --color -l'   >> /etc/csh.cshrc
+RUN echo 'alias ls="ls --color"'    >> ~/.bashrc
+RUN echo 'alias ll="ls --color -l"' >> ~/.bashrc
 
-RUN tcsh echo afni -ver
+RUN tcsh -c "echo afni -ver"
