@@ -20,6 +20,6 @@ RUN chsh -s /usr/bin/tcsh
 ### Install R
 RUN tcsh -c "printenv"
 RUN tcsh -c "setenv R_LIBS $HOME/R"
-RUN echo 'setenv R_LIBS $HOME/R' >> /etc/csh.cshrc"
+RUN echo 'setenv R_LIBS $HOME/R' >> /etc/csh.cshrc
 RUN tcsh -c "printenv"
 RUN tcsh -c "mkdir $R_LIBS" 
