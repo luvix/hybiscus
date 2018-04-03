@@ -34,8 +34,8 @@ RUN tcsh -c "setenv R_LIBS $HOME/R"
 RUN echo 'setenv R_LIBS $HOME/R' >> /etc/csh.cshrc  
 RUN mkdir $HOME/R
 RUN curl -O https://afni.nimh.nih.gov/pub/dist/src/scripts_src/@add_rcran_ubuntu.tcsh
-RUN tcsh -c "tcsh @add_rcran_ubuntu.tcsh"
-RUN tcsh -c "tcsh rPkgsInstall -pkgs ALL"
+RUN tcsh -c "tcsh @add_rcran_ubuntu.tcsh && rPkgsInstall -pkgs ALL"
+# RUN tcsh -c "tcsh rPkgsInstall -pkgs ALL"
 
 ### Make AFNI/SUMA profiles
 RUN cp $HOME/abin/AFNI.afnirc $HOME/.afnirc 
