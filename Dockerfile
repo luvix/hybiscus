@@ -14,47 +14,12 @@ RUN apt-get update
 RUN apt-get install -y tcsh xfonts-base python-qt4 gsl-bin netpbm gnome-tweak-tool  \
                         libjpeg62 xvfb xterm vim curl gedit evince                  \
                         libglu1-mesa-dev libglw1-mesa libxm4 build-essential
-RUN apt-get update
-RUN apt-get install -y gnome-terminal nautilus      \
-                        gnome-icon-theme-symbolic
-
 ### Make “tcsh” default shell (optional/recommended)
 RUN chsh -s /usr/bin/tcsh
 
-### Install AFNI binaries
-RUN cd
-RUN curl -O https://afni.nimh.nih.gov/pub/dist/bin/linux_ubuntu_16_64/@update.afni.binaries
-RUN tcsh @update.afni.binaries -package linux_ubuntu_16_64  -do_extras
-
 ### Install R
-RUN find / -name '.cshrc'
+RUN tcsh -c "printenv"
 RUN tcsh -c "setenv R_LIBS $HOME/R"
-# RUN tcsh -c "mkdir $R_LIBS" 
-RUN tcsh -c "mkdir $HOME/R"
-RUN tcsh -c "echo 'setenv R_LIBS ~/R' >> ~/.cshrc"
-RUN curl -O https://afni.nimh.nih.gov/pub/dist/src/scripts_src/@add_rcran_ubuntu.tcsh
-RUN tcsh -c "@add_rcran_ubuntu.tcsh"
-RUN tcsh -c "rPkgsInstall -pkgs ALL"
-
-### Make AFNI/SUMA profiles
-RUN cp $HOME/abin/AFNI.afnirc $HOME/.afnirc 
-RUN tcsh -c "suma -update_env"
-### Prepare for Bootcamp
-RUN curl -O https://afni.nimh.nih.gov/pub/dist/edu/data/CD.tgz
-RUN tar xvzf CD.tgz && cd CD
-RUN tcsh -c "s2.cp.files . ~ && cd .."
-
-### Evaluate setup/system (important!)
-RUN tcsh -c "afni_system_check.py -check_all > ~/out.afni_system_check.txt"
-
-### Niceify terminal (optional, but goood)
-RUN tcsh -c "echo 'set filec' >> ~/.cshrc"
-RUN tcsh -c "echo 'set autolist' >> ~/.cshrc"
-RUN tcsh -c "echo 'set nobeep'   >> ~/.cshrc"
-
-RUN tcsh -c "echo 'alias ls ls --color=auto' >> ~/.cshrc"
-RUN tcsh -c "echo 'alias ll ls --color -l'   >> ~/.cshrc"
-RUN tcsh -c "echo 'alias ls="ls --color"'    >> ~/.bashrc"
-RUN tcsh -c "echo 'alias ll="ls --color -l"' >> ~/.bashrc"
-
-RUN tcsh echo afni -ver
+RUN echo 'setenv R_LIBS $HOME/R' >> /etc/csh.cshrc
+RUN tcsh -c "printenv"
+RUN tcsh -c "mkdir $R_LIBS" 
