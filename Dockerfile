@@ -27,12 +27,12 @@ RUN curl -O https://afni.nimh.nih.gov/pub/dist/bin/linux_ubuntu_16_64/@update.af
 RUN tcsh @update.afni.binaries -package linux_ubuntu_16_64  -do_extras
 
 ### Install R
-RUN tcsh setenv R_LIBS $HOME/R
+RUN tcsh -c "setenv R_LIBS $HOME/R"
 RUN mkdir $R_LIBS
-RUN tcsh echo 'setenv R_LIBS ~/R' >> ~/.cshrc
+RUN tcsh -c "echo 'setenv R_LIBS ~/R' >> ~/.cshrc"
 RUN curl -O https://afni.nimh.nih.gov/pub/dist/src/scripts_src/@add_rcran_ubuntu.tcsh
-RUN tcsh @add_rcran_ubuntu.tcsh
-RUN tcsh rPkgsInstall -pkgs ALL
+RUN tcsh -c "@add_rcran_ubuntu.tcsh"
+RUN tcsh -c "rPkgsInstall -pkgs ALL"
 
 ### Make AFNI/SUMA profiles
 RUN cp $HOME/abin/AFNI.afnirc $HOME/.afnirc 
