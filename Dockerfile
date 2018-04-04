@@ -19,10 +19,8 @@ RUN apt-get install -y gnome-terminal nautilus      \
                         gnome-icon-theme-symbolic
 
 ### new user: hybiscus
-RUN useradd -m hybiscus
-
 ### Make “tcsh” default shell (optional/recommended)
-RUN su hybiscus -c "chsh -s /usr/bin/tcsh"
+RUN useradd -ms /usr/bin/tcsh hybiscus
 
 ### Install AFNI binaries
 RUN su - hybiscus -c "curl -O https://afni.nimh.nih.gov/pub/dist/bin/linux_ubuntu_16_64/@update.afni.binaries"
@@ -33,7 +31,7 @@ RUN su - hybiscus -c "echo 'setenv R_LIBS ~/R' >> ~/.cshrc"
 RUN su - hybiscus -c "mkdir ~/R"
 RUN su - hybiscus -c "curl -O https://afni.nimh.nih.gov/pub/dist/src/scripts_src/@add_rcran_ubuntu.tcsh"
 RUN tcsh /home/hybiscus/@add_rcran_ubuntu.tcsh
-RUN su - hybiscus -c "~/abin/rPkgsInstall -pkgs ALL"
+RUN su - hybiscus -c "tcsh -c '~/abin/rPkgsInstall -pkgs ALL'"
 
 ### Make AFNI/SUMA profiles
 RUN su - hybiscus -c "cp ~/abin/AFNI.afnirc ~/.afnirc"
