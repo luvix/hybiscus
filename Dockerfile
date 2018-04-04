@@ -18,47 +18,42 @@ RUN apt-get update
 RUN apt-get install -y gnome-terminal nautilus      \
                         gnome-icon-theme-symbolic
 
+### new user: hybiscus
+RUN useradd -m hybiscus
+
 ### Make “tcsh” default shell (optional/recommended)
-RUN chsh -s /usr/bin/tcsh
+RUN su hybiscus -c "chsh -s /usr/bin/tcsh"
 
 ### Install AFNI binaries
-RUN cd
-RUN curl -O https://afni.nimh.nih.gov/pub/dist/bin/linux_ubuntu_16_64/@update.afni.binaries
-RUN tcsh @update.afni.binaries -package linux_ubuntu_16_64  -do_extras
+RUN su - hybiscus -c "curl -O https://afni.nimh.nih.gov/pub/dist/bin/linux_ubuntu_16_64/@update.afni.binaries"
+RUN su - hybiscus -c "tcsh @update.afni.binaries -package linux_ubuntu_16_64  -do_extras"
 
 ### Install R
-RUN export R_LIBS=$HOME/R
-RUN echo 'export R_LIBS=$HOME/R' >> ~/.bashrc
-RUN echo $R_LIBS
-RUN tcsh -c "setenv R_LIBS $HOME/R"
-RUN echo 'setenv R_LIBS $HOME/R' >> /etc/csh.cshrc  
-RUN mkdir $HOME/R
-RUN curl -O https://afni.nimh.nih.gov/pub/dist/src/scripts_src/@add_rcran_ubuntu.tcsh
-RUN tcsh -c "tcsh @add_rcran_ubuntu.tcsh && rPkgsInstall -pkgs ALL"
-# RUN tcsh -c "tcsh rPkgsInstall -pkgs ALL"
+RUN su - hybiscus -c "echo 'setenv R_LIBS ~/R' >> ~/.cshrc"
+RUN su - hybiscus -c "mkdir ~/R"
+RUN su - hybiscus -c "curl -O https://afni.nimh.nih.gov/pub/dist/src/scripts_src/@add_rcran_ubuntu.tcsh"
+RUN tcsh /home/hybiscus/@add_rcran_ubuntu.tcsh
+RUN su - hybiscus -c "~/abin/rPkgsInstall -pkgs ALL"
 
 ### Make AFNI/SUMA profiles
-RUN cp $HOME/abin/AFNI.afnirc $HOME/.afnirc 
-RUN tcsh -c "tcsh suma -update_env"
+RUN su - hybiscus -c "cp ~/abin/AFNI.afnirc ~/.afnirc"
+RUN su - hybiscus -c "tcsh -c 'suma -update_env'"
 ### Prepare for Bootcamp
-RUN curl -O https://afni.nimh.nih.gov/pub/dist/edu/data/CD.tgz
-RUN tar xvzf CD.tgz && cd CD
-RUN tcsh -c "tcsh s2.cp.files . ~ && cd .."
+RUN su - hybiscus -c "curl -O https://afni.nimh.nih.gov/pub/dist/edu/data/CD.tgz"
+RUN su - hybiscus -c "tar xvzf CD.tgz"
+RUN su - hybiscus -c "cd CD && tcsh s2.cp.files . ~"
 
-### Evaluate setup/system (important!)
-RUN tcsh -c "tcsh afni_system_check.py -check_all > ~/out.afni_system_check.txt"
+### Evaluate setup/system (important!) 이거 abin 아냐???
+RUN su - hybiscus -c "python abin/afni_system_check.py -check_all > ~/out.afni_system_check.txt"
 
 ### Niceify terminal (optional, but goood)
-RUN echo 'set filec' >> /etc/csh.cshrc
-RUN echo 'set autolist' >> /etc/csh.cshrc
-RUN echo 'set nobeep'   >> /etc/csh.cshrc
-RUN echo 'set filec' >> ~/.bashrc
-RUN echo 'set autolist' >> ~/.bashrc
-RUN echo 'set nobeep'   >> ~/.bashrc
+RUN su - hybiscus -c "echo 'set filec'      >> ~/.cshrc"
+RUN su - hybiscus -c "echo 'set autolist'   >> ~/.cshrc"
+RUN su - hybiscus -c "echo 'set nobeep'     >> ~/.cshrc"
 
-RUN echo 'alias ls ls --color=auto' >> /etc/csh.cshrc
-RUN echo 'alias ll ls --color -l'   >> /etc/csh.cshrc
-RUN echo 'alias ls="ls --color"'    >> ~/.bashrc
-RUN echo 'alias ll="ls --color -l"' >> ~/.bashrc
+RUN su - hybiscus -c "echo 'alias ls ls --color=auto'   >> ~/.cshrc"
+RUN su - hybiscus -c "echo 'alias ll ls --color -l'     >> ~/.cshrc"
+RUN su - hybiscus -c "echo 'alias ls=\"ls --color\"'    >> ~/.bashrc"
+RUN su - hybiscus -c "echo 'alias ll=\"ls --color -l\"' >> ~/.bashrc"
 
-RUN tcsh -c "tcsh echo afni -ver"
+RUN su - hybiscus -c "tcsh -c 'afni -ver'"
