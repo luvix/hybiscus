@@ -1,7 +1,6 @@
 FROM ubuntu:xenial
 
 LABEL maintainer="Leesuk \"Theodore\" Kim, Researcher in SungKyunKwan Univ.<leesuk.kim.skku@gmail.com>"
-
 ## volume
 VOLUME [ "/hybiscus" ]
 
@@ -20,8 +19,9 @@ RUN apt-get install -y gnome-terminal nautilus      \
                         gnome-icon-theme-symbolic
 
 ### new user: hybiscus
-### Make “tcsh” default shell (optional/recommended)
 RUN useradd -ms /usr/bin/tcsh hybiscus
+### Make “tcsh” default shell (optional/recommended)
+SHELL ["/usr/bin/tcsh", "-c"]
 
 ### Install AFNI binaries
 RUN su - hybiscus -c "curl -O https://afni.nimh.nih.gov/pub/dist/bin/linux_ubuntu_16_64/@update.afni.binaries"
