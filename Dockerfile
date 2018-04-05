@@ -13,7 +13,8 @@ RUN add-apt-repository universe
 RUN apt-get update
 RUN apt-get install -y tcsh xfonts-base python-qt4 gsl-bin netpbm gnome-tweak-tool  \
                         libjpeg62 xvfb xterm vim curl gedit evince                  \
-                        libglu1-mesa-dev libglw1-mesa libxm4 build-essential
+                        libglu1-mesa-dev libglw1-mesa libxm4 build-essential        \
+                        libnlopt-dev
 RUN apt-get update
 RUN apt-get install -y gnome-terminal nautilus      \
                         gnome-icon-theme-symbolic
