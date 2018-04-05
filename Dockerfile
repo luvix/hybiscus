@@ -32,11 +32,11 @@ RUN su - hybiscus -c "echo 'setenv R_LIBS ~/R' >> ~/.cshrc"
 RUN su - hybiscus -c "mkdir ~/R"
 RUN su - hybiscus -c "curl -O https://afni.nimh.nih.gov/pub/dist/src/scripts_src/@add_rcran_ubuntu.tcsh"
 RUN tcsh /home/hybiscus/@add_rcran_ubuntu.tcsh
-RUN su - hybiscus -c "tcsh -c '~/abin/rPkgsInstall -pkgs ALL'"
+RUN su - hybiscus -c "rPkgsInstall -pkgs ALL"
 
 ### Make AFNI/SUMA profiles
 RUN su - hybiscus -c "cp ~/abin/AFNI.afnirc ~/.afnirc"
-RUN su - hybiscus -c "tcsh -c 'suma -update_env'"
+RUN su - hybiscus -c "suma -update_env"
 ### Prepare for Bootcamp
 RUN su - hybiscus -c "curl -O https://afni.nimh.nih.gov/pub/dist/edu/data/CD.tgz"
 RUN su - hybiscus -c "tar xvzf CD.tgz"
@@ -55,4 +55,4 @@ RUN su - hybiscus -c "echo 'alias ll ls --color -l'     >> ~/.cshrc"
 RUN su - hybiscus -c "echo 'alias ls=\"ls --color\"'    >> ~/.bashrc"
 RUN su - hybiscus -c "echo 'alias ll=\"ls --color -l\"' >> ~/.bashrc"
 
-RUN su - hybiscus -c "tcsh -c 'afni -ver'"
+RUN su - hybiscus -c "afni -ver"
